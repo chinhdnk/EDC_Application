@@ -13,12 +13,14 @@ namespace WebAPI.Services
         public static IServiceCollection AddRepositoryServices(this IServiceCollection services)
         {
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            services.AddTransient<IFileService, FileService>();
 
             services.AddTransient<IJwtTokenManager, JwtTokenManager>();
             services.AddTransient<IAccountRepository, AccountRepository>();
             services.AddSingleton<ILoggerManager, LoggerManager>();
 
             services.AddTransient<IPermissionRepository, PermissionRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
             return services;
         }
     }

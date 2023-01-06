@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using WebAPI.Authentication;
-using Infrastructure.Constants;
+using Domain.Constants;
 
 namespace WebAPI.Filters
 {

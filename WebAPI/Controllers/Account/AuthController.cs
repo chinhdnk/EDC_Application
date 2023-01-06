@@ -1,5 +1,5 @@
 ﻿using Domain.Models;
-using Infrastructure.Constants;
+using Domain.Constants;
 using Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;

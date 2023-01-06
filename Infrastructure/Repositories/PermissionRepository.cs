@@ -14,10 +14,75 @@ namespace Infrastructure.Repositories
 {
     public class PermissionRepository : BaseRepository<TblPermission>, IPermissionRepository
     {
-        //private readonly AdminDBContext _dbContext;
         public PermissionRepository(AdminDBContext dbContext) :base(dbContext)
         {
-            //_dbContext = dbContext;
+        }
+
+        public async Task<PagingResponse<PermissionModel>> GetPermissionList(PageParameters pageParameters, string searchKey, bool status = false)
+        {
+            try
+            {
+                IEnumerable<PermissionModel> permList = await _dbContext.TblPermissions.Include(m => m.MenuNavigation)
+                        .Select(u => new PermissionModel
+                        {
+                            PermissionID = u.PermId,
+                            Title = u.Title,
+                            MenuId = u.MenuNavigation.MenuId,
+                            MenuName = u.MenuNavigation.Title,
+                            Status = u.Status,
+                            CreatedBy = u.CreatedBy,
+                            CreatedDate = u.CreatedDate
+                        }).ToListAsync();
+
+                if (!string.IsNullOrWhiteSpace(searchKey))
+                {
+                    permList = permList.Where(x => x.Title.ToUpper().Contains(searchKey.ToUpper()));
+                }
+
+                PagedList<PermissionModel> list = PagedList<PermissionModel>.ToPagedList(permList, pageParameters.PageNumber, pageParameters.PageSize);
+
+                PagingResponse<PermissionModel> pagingPerm = new PagingResponse<PermissionModel>
+                {
+                    Items = list,
+                    PageData = list.PageData
+                };
+
+                return pagingPerm;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }           
+
+        }
+
+        public async Task<PermissionModel> UpdatePermission(PermissionModel permItem)
+        {
+            TblPermission permEntity = await _dbContext.TblPermissions.FindAsync(permItem.PermissionID);
+            if (permEntity != null)
+            {
+                permItem.CreatedBy = permEntity.CreatedBy;
+                permItem.CreatedDate = permEntity.CreatedDate;
+
+                permEntity = Convert2Entity(permEntity, permItem);
+                _dbContext.Entry(permEntity).State = EntityState.Modified;
+
+                await _dbContext.SaveChangesAsync();
+                return permItem;
+            }
+            else 
+                return null;
+        }
+        public async Task<PermissionModel> CreatePermission(PermissionModel permission)
+        {
+            TblPermission permEntity = new TblPermission();
+            permEntity = Convert2Entity(permEntity, permission);
+
+            permEntity = await AddAsync(permEntity);
+
+            permission.PermissionID = permEntity.PermId;
+            return permission;
         }
 
         public async Task<bool> CheckExist(string perId)
@@ -36,6 +101,20 @@ namespace Infrastructure.Repositories
 
             var listPerm = listPermGroup.Concat(listPermUser);
             return listPerm.Distinct();
+        }
+
+        private TblPermission Convert2Entity(TblPermission entity, PermissionModel permission)
+        {
+            entity.PermId = permission.PermissionID;
+            entity.Title = permission.Title;
+            entity.Status = permission.Status;
+            entity.Menu = permission.MenuId;
+            entity.CreatedBy = permission.CreatedBy;
+            entity.CreatedDate = permission.CreatedDate;
+            entity.ModifiedBy = permission.ModifiedBy;
+            entity.ModifiedDate = permission.ModifiedDate;
+            return entity;
+
         }
     }
 }

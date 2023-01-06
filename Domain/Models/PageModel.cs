@@ -54,7 +54,7 @@ namespace Domain.Models
     {
         const int maxPageSize = 50;
         public int PageNumber { get; set; } = 1;
-        private int _pageSize = 15;
+        private int _pageSize = 25;
         public int PageSize
         {
             get

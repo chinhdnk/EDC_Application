@@ -1,0 +1,142 @@
+﻿<div class="app-sidebar__inner">
+    <ul class="vertical-nav-menu">
+        <li>
+            <a href="#" style="color:#3f6ad8;">
+                <i class="metismenu-icon pe-7s-id"></i>
+                <b>ADMINISTRATION</b>
+                <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+            </a>
+            <ul>
+                <li>
+                    <NavLink href="/administration/user">
+                        <i class="metismenu-icon"></i>
+                        User
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink href="/administration/group">
+                        <i class="metismenu-icon"></i>
+                        Group
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink href="/administration/permission">
+                        <i class="metismenu-icon"></i>
+                        Permission
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink href="/administration/study_responsibility">
+                        <i class="metismenu-icon">
+                        </i>Study Responsibility
+                    </NavLink>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" style="color:#3f6ad8;">
+                <i class="metismenu-icon pe-7s-tools"></i>
+                SYSTEM CONFIG
+                <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+            </a>
+            <ul>
+                <li>
+                    <a href="elements-buttons-standard.html">
+                        <i class="metismenu-icon"></i>
+                        System Parameter
+                    </a>
+                </li>
+                <li>
+                    <a href="elements-dropdowns.html">
+                        <i class="metismenu-icon">
+                        </i>Mailling & SMS
+                    </a>
+                </li>
+                <li>
+                    <a href="elements-icons.html">
+                        <i class="metismenu-icon">
+                        </i>Contact info
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" style="color:#3f6ad8;">
+                <i class="metismenu-icon pe-7s-box1"></i>
+                LIBRARY MANAGEMENT
+                <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+            </a>
+            <ul>
+                <li>
+                    <a href="components-tabs.html">
+                        <i class="metismenu-icon">
+                        </i>Theme
+                    </a>
+                </li>
+                <li>
+                    <a href="components-accordions.html">
+                        <i class="metismenu-icon">
+                        </i>Variable
+                    </a>
+                </li>
+                <li>
+                    <a href="components-notifications.html">
+                        <i class="metismenu-icon">
+                        </i>Category
+                    </a>
+                </li>
+                <li>
+                    <a href="components-modals.html">
+                        <i class="metismenu-icon">
+                        </i>CRF
+                    </a>
+                </li>
+                <li>
+                    <a href="components-progress-bar.html">
+                        <i class="metismenu-icon">
+                        </i>Site
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" style="color:#3f6ad8;">
+                <i class="metismenu-icon pe-7s-note2"></i>
+                LOGS
+                <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+            </a>
+            <ul>
+                <li>
+                    <a href="components-tabs.html">
+                        <i class="metismenu-icon">
+                        </i>User Online
+                    </a>
+                </li>
+                <li>
+                    <a href="components-accordions.html">
+                        <i class="metismenu-icon">
+                        </i>Access Log
+                    </a>
+                </li>
+                <li>
+                    <a href="components-notifications.html">
+                        <i class="metismenu-icon">
+                        </i>Dataset Export Log
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

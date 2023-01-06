@@ -15,5 +15,9 @@ namespace Infrastructure.Interfaces.IRepositories
     {
         IQueryable<string> GetPermOfUser(string userName);
         Task<bool> CheckExist(string perId);
+        Task<PagingResponse<PermissionModel>> GetPermissionList(PageParameters pageParameters, string searchKey, bool status = false);
+
+        Task<PermissionModel> UpdatePermission(PermissionModel permItem);
+        Task<PermissionModel> CreatePermission(PermissionModel permission);
     }
 }

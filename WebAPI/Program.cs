@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using WebAPI.Exceptions;
 using WebAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -51,6 +52,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// handling error in middleware
+app.ConfigureCustomExceptionMiddleware();
+
+app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 

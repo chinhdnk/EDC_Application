@@ -1,6 +1,6 @@
 ﻿using Application.Interfaces.IRepositories;
 using Domain.Models;
-using Infrastructure.Constants;
+using Domain.Constants;
 using Infrastructure.Entities.AdminSystem;
 using Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
