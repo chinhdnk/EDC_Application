@@ -18,6 +18,15 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddRepositoryServices();
 
+builder.Services.AddCors(policy =>
+{
+    policy.AddPolicy("CorsPolicy", opt => opt
+        .AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .WithExposedHeaders("X-Pagination"));
+});
+
 builder.Services.AddDbContext<AdminDBContext>(opts => {
     opts.UseSqlServer(builder.Configuration["ConnectionStrings:AdminSystemDB"]);
     opts.EnableSensitiveDataLogging(true);
@@ -59,6 +68,7 @@ app.ConfigureCustomExceptionMiddleware();
 app.UseStaticFiles();
 
 app.UseHttpsRedirection();
+app.UseCors("CorsPolicy");
 
 app.UseAuthorization();
 

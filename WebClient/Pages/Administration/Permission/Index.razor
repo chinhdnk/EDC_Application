@@ -1,0 +1,94 @@
+﻿@page "/administration/permission"
+
+@inject IPermissionService _permServices
+
+<div class="app-page-title">
+    <div class="page-title-wrapper">
+        <div class="page-title-heading">
+            <div class="page-title-icon">
+                <i class="pe-7s-drawer icon-gradient bg-happy-itmeo">
+                </i>
+            </div>
+            <div>
+                Permission Management
+                <div class="page-title-subheading">
+                    Display all users of the system.
+                </div>
+            </div>
+        </div>
+        <div class="page-title-actions">
+            <button class="mb-2 me-2 btn btn-success">
+                <span class="btn-icon-wrapper pe-2 opacity-7">
+                    <i class="fa fa-plus fa-w-20"></i>
+                </span>
+                New Permission
+            </button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <h5 class="card-title">Permission list</h5>
+                @if (permList.Count()>0)
+                {
+                    <table class="mb-0 table table-striped">
+                       <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Permission ID</th>
+                                <th>Title</th>
+                                <th>Menu</th
+                                <th>Status</th>
+                                <th scope="col">Update</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var perm in permList)
+                        {
+                            i += 1;
+                            numberBegin = 15 * (pageParameters.PageNumber - 1);
+                            <tr>
+                                 <th scope="row"> @(index=i+numberBegin)</th>
+                                 <td>@perm.PermissionID</td
+                                     <td>@perm.Title</td>
+                                     <td>@perm.MenuName</td>
+                                     <td>@((MarkupString)(perm.Status ? "<i class=\"fa fa-check\" style='color:green;'></i>" : "<i class=\"fa fa-lock\"></i>"))</td>
+                    
+                                <td class="align-middle">
+                                    <button type="button" class="btn btn-info">Update</button>
+                                </td>
+                                <td class="align-middle">
+                                    <button type="button" class="btn btn-danger">Delete</button>
+                                </td>
+                            </tr>
+                         }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <span>
+                        Loading permissions...
+                    </span>
+                }
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    public IEnumerable<PermissionModel> permList { get; set; } = new List<PermissionModel>();
+    public PageData pageInfo { get; set; } = new PageData();
+    int i = 0; int numberBegin = 0; int index = 0;
+    PageParameters pageParameters = new PageParameters();
+    protected async override Task OnInitializedAsync()
+    {
+        var pagingResponse= await _permServices.GetPermissions(1);
+        permList = pagingResponse.Items;
+        pageInfo = pagingResponse.PageData;
+    }
+}
