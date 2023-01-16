@@ -23,12 +23,12 @@ namespace WebAPI.Controllers.Admin
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(int status, int pageNumber, string searchKey )
+        public async Task<IActionResult> Get(int pageNumber, string searchValue="")
         {
             PageParameters pageParameters = new PageParameters();
             pageParameters.PageNumber = pageNumber;
             userName = HttpContext.User.Identity.Name;
-            PagingResponse<PermissionModel> permLists = await _permRepo.GetPermissionList(pageParameters, searchKey, status == 1);
+            PagingResponse<PermissionModel> permLists = await _permRepo.GetPermissionList(pageParameters, searchValue);
             _logger.LogInfo($"{userName} get the permission list");
             return Ok(permLists);
         }

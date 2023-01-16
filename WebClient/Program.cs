@@ -10,10 +10,12 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 var apiUrl = builder.Configuration.GetSection("ApiUrl").Value;
-builder.Services.AddHttpClient("WebApi", (sp, cl) =>
+builder.Services.AddHttpClient("WebApi", (config) =>
 {
-    cl.BaseAddress = new Uri(apiUrl);
     //cl.BaseAddress = new Uri("https://localhost:44347/");
+    config.BaseAddress = new Uri(apiUrl);
+    config.Timeout = new TimeSpan(0, 0, 30);
+    config.DefaultRequestHeaders.Clear();
 });
 
 builder.Services.AddScoped(

@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Reflection.Metadata;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace Application.BusinessServices
 {
@@ -22,9 +23,9 @@ namespace Application.BusinessServices
             _client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<PagingResponse<PermissionModel>> GetPermissions(int pageNumber)
+        public async Task<PagingResponse<PermissionModel>> GetPermissions(int? pageNumber, string? searchValue)
         {
-            var response = await _client.GetAsync("api/admin/permission?status=1&pageNumber=2&searchKey=");
+            var response = await _client.GetAsync($"api/admin/permission?pageNumber={pageNumber}&searchValue={searchValue}");
             var content = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode)
             {
