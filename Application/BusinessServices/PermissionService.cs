@@ -10,29 +10,24 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Reflection.Metadata;
 using Microsoft.AspNetCore.WebUtilities;
+using Application.ApiClient;
 
 namespace Application.BusinessServices
 {
     public class PermissionService : IPermissionService
     {
-        private readonly HttpClient _client;
+        private readonly IWebApiExecuter _apiExecuter;
+        private const string urlAPI = "api/admin/permission";
 
-        public PermissionService(HttpClient client)
+        public PermissionService(IWebApiExecuter apiExecuter)
         {
-            _client = client;
-            _client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            _apiExecuter = apiExecuter;
         }
 
-        public async Task<PagingResponse<PermissionModel>> GetPermissions(int? pageNumber, string? searchValue)
+        public async Task<PagingResponse<PermissionModel>> GetPermissionsList(int pageNumber, string searchValue)
         {
-            var response = await _client.GetAsync($"api/admin/permission?pageNumber={pageNumber}&searchValue={searchValue}");
-            var content = await response.Content.ReadAsStringAsync();
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new ApplicationException(content);
-            }
-            var perms = await response.Content.ReadFromJsonAsync<PagingResponse<PermissionModel>>();
-            return perms;
+            var response = await _apiExecuter.InvokeGet<PagingResponse<PermissionModel>>(urlAPI +$"?pageNumber={pageNumber}&searchValue={searchValue}");
+            return response;
         }
     }
 }

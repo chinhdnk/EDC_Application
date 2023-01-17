@@ -4,6 +4,6 @@ namespace Application.BusinessServices.Interfaces
 {
     public interface IPermissionService
     {
-        Task<PagingResponse<PermissionModel>> GetPermissions(int? pageNumber, string? search);
+        Task<PagingResponse<PermissionModel>> GetPermissionsList(int pageNumber, string searchValue);
     }
 }

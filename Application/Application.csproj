@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <Folder Include="ApplicationExceptions\" />
-    <Folder Include="ApiClient\" />
+    <Folder Include="Mappers\" />
     <Folder Include="Validators\" />
     <Folder Include="Requests\" />
   </ItemGroup>
@@ -16,6 +16,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
+    <PackageReference Include="Microsoft.JSInterop" Version="6.0.10" />
   </ItemGroup>
 
   <ItemGroup>

@@ -84,7 +84,7 @@
 
     private async Task GetPermissions()
     {
-        var pagingResponse = await _permServices.GetPermissions(pageParameters.PageNumber, searchValue);
+        var pagingResponse = await _permServices.GetPermissionsList(pageParameters.PageNumber, searchValue);
         permList = pagingResponse.Items;
         pageInfo = pagingResponse.PageData;
 

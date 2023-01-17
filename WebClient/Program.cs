@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using System.Security;
 using WebClient;
+using WebClient.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -21,6 +22,7 @@ builder.Services.AddHttpClient("WebApi", (config) =>
 builder.Services.AddScoped(
     sp => sp.GetService<IHttpClientFactory>().CreateClient("WebApi"));
 
-builder.Services.AddScoped<IPermissionService, PermissionService>();
+//add EDC web's services
+builder.Services.AddWebServices();
 
 await builder.Build().RunAsync();
